@@ -4,24 +4,26 @@ import Container from "react-bootstrap/Container";
 import {Route,Switch} from 'react-router-dom';
 import './api/AxiosDefaults';
 import SignUpForm from "./pages/auth/SignUpForm";
+import SignInForm from "./pages/auth/SignInForm";
+
+
 
 function App() {
+
+
   return (
-      // here we add the styles (imported above) and the .App
-      // is the class in the stylesheet
-      <div className={styles.App}>
+        <div className={styles.App}>
           <NavBar />
           <Container className={styles.Main}>
             <Switch>
               <Route exact path='/' render={() => <h1>Home page</h1>} />
-              <Route exact path='/signin' render={() => <h1>Sign in</h1>} />
+              <Route exact path='/signin' render={() => <SignInForm />} />
               <Route exact path='/signup' render={() => <SignUpForm />} />
               <Route render={() => <p>Page not found!</p>} />
             </Switch>
           </Container>
-
-      </div>
-    );
+        </div>
+  );
 }
 
 export default App;
