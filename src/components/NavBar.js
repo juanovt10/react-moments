@@ -3,12 +3,71 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import logo from '../assets/logo.png';
 import styles from '../styles/NavBar.module.css';
 import {NavLink} from 'react-router-dom';
-import { useCurrentUser } from '../context/CurrentUserContext';
+import {
+    useCurrentUser,
+    useSetCurrentUser,
+} from '../context/CurrentUserContext';
+import Avatar from './Avatar'
+import axios from 'axios';
 
 
 function NavBar() {
     const currentUser = useCurrentUser();
-    const loggedInIcons = <>{currentUser?.username}</>
+    const setCurrentUser = useSetCurrentUser();
+
+    const handleSignOut = async () => {
+        try {
+            await axios.post('dj-rest-auth/logout/');
+            setCurrentUser(null);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const addPostIcon = (
+        <NavLink 
+            className={styles.NavLink} 
+            activeClassName={styles.Active} 
+            to="/posts/create"
+        >
+            <i className="fa-solid fa-plus-square" />Add post
+        </NavLink>
+
+    )
+    const loggedInIcons = <>
+        <NavLink 
+            className={styles.NavLink} 
+            activeClassName={styles.Active} 
+            to="/feed"
+        >
+            <i className="fa-solid fa-stream" />Feed
+        </NavLink>
+        <NavLink 
+            className={styles.NavLink} 
+            activeClassName={styles.Active} 
+            to="/liked"
+        >
+            <i className="fa-solid fa-heart" />Liked
+        </NavLink>
+        <NavLink 
+            className={styles.NavLink} 
+            to="/"
+            onClick={handleSignOut}
+        >
+            <i className="fa-solid fa-sign-out-alt" />Sign Out
+        </NavLink>
+        <NavLink 
+            className={styles.NavLink} 
+            to={`/profiles/${currentUser?.profile_id}`}
+            onClick={() => {}}
+        >
+            <Avatar 
+                src={currentUser?.profile_image}
+                text="Profile"
+                height={40}
+            />
+        </NavLink>
+    </>
     const loggedOutIcons = (
         <>
             <NavLink className={styles.NavLink} activeClassName={styles.Active} to="/signin">
@@ -30,6 +89,7 @@ function NavBar() {
                             <img src={logo} alt="logo" height="45" />
                         </Navbar.Brand>
                     </NavLink>
+                    {currentUser && addPostIcon}
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto text-left">
