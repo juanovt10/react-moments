@@ -13,6 +13,8 @@ import { useLocation } from "react-router";
 import { axiosReq } from "../../api/AxiosDefaults";
 
 import NoResults from "../../assets/no-results.png"
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData } from "../../utils/utils";
 
 
 function PostsPage({ message, filter=""}) {
@@ -61,13 +63,21 @@ function PostsPage({ message, filter=""}) {
                     />
                 </Form>
 
-
                 {hasLoaded ? (
                     <>
                         {posts.results?.length ? (
-                            posts.results.map((post) => (
-                                <Post key={post.id} {...post} setPosts={setPosts} />    
-                            )) 
+                            <InfiniteScroll
+                                children={
+                                    posts.results.map((post) => (
+                                        <Post key={post.id} {...post} setPosts={setPosts} />    
+                                    )) 
+                                }
+                                dataLength={posts.results?.length}
+                                loader={<Asset spinner />}
+                                hasMore={!!posts.next}
+                                next={() => fetchMoreData(posts, setPosts)}
+                            />
+                            
                         ) : (
                             <Container className={appStyles.Container}>
                                 <Asset src={NoResults} message={message} />
@@ -79,6 +89,7 @@ function PostsPage({ message, filter=""}) {
                         <Asset spinner />
                     </Container>
                 )}
+
             </Col>
             <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
                 <p>Popular profiles for desktop</p>
