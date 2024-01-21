@@ -20,7 +20,7 @@ const Post = (props) => {
         image,
         updated_at,
         postPage,
-        setPost,
+        setPosts,
     } = props;
 
     const currentUser = useCurrentUser();
@@ -29,7 +29,7 @@ const Post = (props) => {
     const handleLike = async () => {
         try {
             const {data} = await axiosRes.post('/likes/', { post:id });
-            setPost((prevPosts) => ({
+            setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
                     return post.id === id
@@ -45,7 +45,7 @@ const Post = (props) => {
     const handleUnlike = async () => {
         try {
             await axiosRes.delete(`/likes/${like_id}`);
-            setPost((prevPosts) => ({
+            setPosts((prevPosts) => ({
                 ...prevPosts,
                 results: prevPosts.results.map((post) => {
                     return post.id === id
@@ -77,7 +77,7 @@ const Post = (props) => {
             </Link>
             <Card.Body>
                 {title && <Card.Title className="text-center">{title}</Card.Title>}
-                {content && <Card.Text>{}</Card.Text>}
+                {content && <Card.Text>{content}</Card.Text>}
                 <div className={styles.PostBar}>
                     {is_owner ? (
                         <OverlayTrigger placement="top" overlay={<Tooltip>You can't like your own post!</Tooltip>}>
