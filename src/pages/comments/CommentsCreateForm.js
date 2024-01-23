@@ -19,25 +19,25 @@ function CommentCreateForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-        const { data } = await axiosRes.post("/comments/", {
-            content,
-            post,
-        });
-        setComments((prevComments) => ({
-            ...prevComments,
-            results: [data, ...prevComments.results],
-        }));
-        setPost((prevPost) => ({
-            results: [
-            {
-                ...prevPost.results[0],
-                comments_count: prevPost.results[0].comments_count + 1,
-            },
-            ],
-        }));
-        setContent("");
+            const { data } = await axiosRes.post("/comments/", {
+                content,
+                post,
+            });
+            setComments((prevComments) => ({
+                ...prevComments,
+                results: [data, ...prevComments.results],
+            }));
+            setPost((prevPost) => ({
+                results: [
+                {
+                    ...prevPost.results[0],
+                    comments_count: prevPost.results[0].comments_count + 1,
+                },
+                ],
+            }));
+            setContent("");
         } catch (err) {
-        console.log(err);
+            console.log(err);
         }
     };
 
@@ -45,17 +45,17 @@ function CommentCreateForm(props) {
         <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Group>
                 <InputGroup>
-                <Link to={`/profiles/${profile_id}`}>
-                    <Avatar src={profileImage} />
-                </Link>
-                <Form.Control
-                    className={styles.Form}
-                    placeholder="my comment..."
-                    as="textarea"
-                    value={content}
-                    onChange={handleChange}
-                    rows={2}
-                />
+                    <Link to={`/profiles/${profile_id}`}>
+                        <Avatar src={profileImage} />
+                    </Link>
+                    <Form.Control
+                        className={styles.Form}
+                        placeholder="my comment..."
+                        as="textarea"
+                        value={content}
+                        onChange={handleChange}
+                        rows={2}
+                    />
                 </InputGroup>
             </Form.Group>
             <button
