@@ -5,33 +5,10 @@ import { axiosReq } from '../../api/AxiosDefaults';
 import { useCurrentUser } from '../../context/CurrentUserContext';
 import Asset from '../../components/Asset';
 import Profile from '../profiles/Profile';
+import { useProfileData } from '../../context/ProfileDataContext';
 
 export const PopularProfiles = ({ mobile }) => {
-    const [profileData, setProfileData] = useState({
-        pageProfile: {results: []},
-        popularProfiles: {results: []},
-    });
-
-    const { popularProfiles} = profileData;
-    const currentUser = useCurrentUser();
-
-    useEffect(() => {
-        const handleMount = async () => {
-            try {
-                const { data } = await axiosReq.get(
-                    "/profiles/?ordering=-followers_count"
-                );
-                setProfileData(prevState => ({
-                    ...prevState,
-                    popularProfiles: {results: data},
-                }));
-            } catch(err) {
-                console.log(err)
-            }
-        };
-
-        handleMount()
-    }, [currentUser]); 
+    const { popularProfiles } = useProfileData();
 
 
     return (
@@ -59,3 +36,5 @@ export const PopularProfiles = ({ mobile }) => {
         </Container>
     )
 }
+
+export default PopularProfiles;
