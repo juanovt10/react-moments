@@ -4,6 +4,7 @@ import appStyles from "../../App.module.css"
 import { axiosReq } from '../../api/AxiosDefaults';
 import { useCurrentUser } from '../../context/CurrentUserContext';
 import Asset from '../../components/Asset';
+import Profile from '../profiles/Profile';
 
 export const PopularProfiles = ({ mobile }) => {
     const [profileData, setProfileData] = useState({
@@ -43,12 +44,12 @@ export const PopularProfiles = ({ mobile }) => {
                     {mobile ? (
                         <div className='d-flex justify-content-around' >
                             {popularProfiles.results?.slice(0,4).map(profile => (
-                                <p key={profile.id}>{profile.owner}</p>
+                                <Profile key={profile.id} profile={profile} mobile />
                             ))}   
                         </div>
                     ) : (
                         popularProfiles.results?.map(profile => (
-                            <p key={profile.id}>{profile.owner}</p>
+                            <Profile key={profile.id} profile={profile} />
                         ))
                     )}           
                 </>
