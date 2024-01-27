@@ -83,7 +83,6 @@ const Post = (props) => {
                     </Link>
                     <div className="d-flex align-items-center">
                         <span>{updated_at}</span>
-                        {console.log('is_owner:', is_owner, 'postPage:', postPage)}
                         {is_owner && postPage && (
                             <MoreDropdown 
                                 handleEdit={handleEdit}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/Profile.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { useCurrentUser, useSetCurrentUser } from '../../context/CurrentUserContext';
+import { useCurrentUser } from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import { Button } from 'react-bootstrap';
@@ -30,8 +30,6 @@ const Profile = (props) => {
                 <strong>{owner}</strong>
             </div>
             <div className={`text-right ${!mobile && 'ml-auto'}`} >
-                {console.log("unfollow function:", typeof handleUnfollow)}
-                {console.log("follow function:", typeof handleFollow)}
 
                 {!mobile && currentUser && !is_owner && (
                     following_id ? (
