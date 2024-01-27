@@ -3,16 +3,14 @@ import { axiosReq } from "../api/AxiosDefaults"
 export const fetchMoreData = async (resource, setResource) => {
     try {
         const { data } = await axiosReq.get(resource.next)
-        setResource(prevResource => ({
+        setResource((prevResource) => ({
             ...prevResource,
-            next:data.next,
+            next: data.next,
             results: data.results.reduce((acc, cur) => {
                 return acc.some(accResult => accResult.id === cur.id)
-                ? acc
-                : [...acc, cur];
+                    ? acc
+                    : [...acc, cur];
             }, prevResource.results)
-        }))
-    } catch(err) {
-
-    }
+        }));
+    } catch(err) {}
 }
