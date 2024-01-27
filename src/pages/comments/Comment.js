@@ -8,7 +8,7 @@ import MoreDropdown from '../../components/MoreDropdown';
 import CommentEditForm from './CommentEditForm';
 import { axiosRes } from '../../api/AxiosDefaults';
 
-export const Comment = (props) => {
+const Comment = (props) => {
     const {
         profile_id,
         profile_img,
@@ -71,20 +71,7 @@ export const Comment = (props) => {
                 )}
             </Media>
         </>
-
-
-
-        // <div>
-        //     <hr />
-        //     <Media>
-        //         <Link to={`/profiles/${profile_id}`} >
-        //         </Link>
-        //             <p>{content}</p>
-        //         </Media.Body>
-        //         {is_owner && (
-        //             <MoreDropdown handleEdit={() => {}} handleDelete={handleDelete}/>
-        //         )}
-        //     </Media>
-        // </div>
     )
 }
+
+export default Comment;
