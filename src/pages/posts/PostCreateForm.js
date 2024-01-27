@@ -14,11 +14,11 @@ import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router";
-// import axios from "axios";
 import { axiosReq } from "../../api/AxiosDefaults";
+import useRedirect from "../../hooks/useRedirect";
 
 function PostCreateForm() {
-
+    useRedirect('loggedOut');
     const [errors, setErrors] = useState({});
 
     const [postData, setPostData] = useState({
