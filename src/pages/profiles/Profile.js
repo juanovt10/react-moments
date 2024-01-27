@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from '../../styles/Profile.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { useCurrentUser } from '../../context/CurrentUserContext';
+import { useCurrentUser, useSetCurrentUser } from '../../context/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import Avatar from '../../components/Avatar';
 import { Button } from 'react-bootstrap';
+import { useSetProfileData } from '../../context/ProfileDataContext';
 
 const Profile = (props) => {
     const { profile, mobile, imageSize=55 } = props;
@@ -12,6 +13,8 @@ const Profile = (props) => {
 
     const currentUser = useCurrentUser();
     const is_owner = currentUser?.username === owner;
+
+    const {handleFollow, handleUnfollow} = useSetProfileData();
 
     return (
         <div
@@ -27,18 +30,21 @@ const Profile = (props) => {
                 <strong>{owner}</strong>
             </div>
             <div className={`text-right ${!mobile && 'ml-auto'}`} >
+                {console.log("unfollow function:", typeof handleUnfollow)}
+                {console.log("follow function:", typeof handleFollow)}
+
                 {!mobile && currentUser && !is_owner && (
                     following_id ? (
                         <Button
                             className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                            onClick={() => {}}
+                            onClick={() => handleUnfollow(profile)}
                         >
                             unfollow
                         </Button>
                     ) : (
                         <Button
                             className={`${btnStyles.Button} ${btnStyles.Black}`}
-                            onClick={() => {}}
+                            onClick={() => handleFollow(profile)}
                         >
                             follow
                         </Button>
